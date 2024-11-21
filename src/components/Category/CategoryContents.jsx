@@ -15,7 +15,7 @@ export default function CategoryContents() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/api/categories');
+        const response = await fetch('https://duaruqyah-zeta.vercel.app/api/categories');
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

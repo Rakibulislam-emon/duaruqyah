@@ -27,7 +27,7 @@ export default function CategoryContentCard({ getData }) {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/subcategories?categoryId=${categoryId}`);
+      const response = await fetch(`https://duaruqyah-zeta.vercel.app/api/subcategories?categoryId=${categoryId}`);
       const data = await response.json();
       setSubcategories(data);  // Store fetched subcategories in the state
       setExpandedCategoryId(categoryId);  // Set the clicked category as expanded

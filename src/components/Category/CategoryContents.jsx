@@ -31,7 +31,7 @@ export default function CategoryContents() {
     };
 
     fetchData(); // Call fetchData to load the data
-  }, []); // Empty dependency array to ensure it runs only once when the component mounts
+  }, [url]); // Empty dependency array to ensure it runs only once when the component mounts
 
   // Filter data based on the searchTerm if it exists, otherwise show all data
   const filteredData = searchTerm

@@ -17,7 +17,7 @@ export default function CategoryContentCard({ getData }) {
       setExpandedCategoryId(getData[0].cat_id); // Set the first category as expanded initially
       handleGetSubData(getData[0].cat_id); // Fetch subcategories for the first category
     }
-  }, [getData]);
+  }, [getData,handleGetSubData]);
 
   // Function to fetch subcategories based on category ID
   const handleGetSubData = async (categoryId) => {

@@ -33,7 +33,7 @@ export default function Section() {
         <button onClick={toggle}>
           <GiHamburgerMenu size={30} className="cursor-pointer" />
         </button>
-        <span className="text-xl">Dua's Importance</span>
+        <span className="text-xl">Dua s Importance</span>
       </div>
 
       {/* Section Title */}

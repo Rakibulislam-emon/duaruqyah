@@ -32,7 +32,8 @@ export default function SurahCard() {
         };
 
         fetchDuas();
-    }, [subcategoryId]);
+    }, [subcategoryId,setSectionTitle,url]);
+
     const filteredData = search
         ? duas.filter((item) =>
             item?.refference_en?.toLowerCase().includes(search.toLowerCase())

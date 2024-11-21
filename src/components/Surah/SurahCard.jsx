@@ -5,6 +5,8 @@ import DuaCard from "./DuaCard";
 import { useSearch } from "../Category/SearchContext";
 
 export default function SurahCard() {
+    const url = process.env.NEXT_PUBLIC_API_URL
+
     const { search } = useSearch()
 
     const { subcategoryId, setSectionTitle } = useDuaContext();
@@ -17,7 +19,7 @@ export default function SurahCard() {
         const fetchDuas = async () => {
             setLoading(true);
             try {
-                const response = await fetch(subcategoryId ? `process.env.NEXT_PUBLIC_API_UR/api/duas?subcategoryId=${subcategoryId}` : `process.env.NEXT_PUBLIC_API_UR/api/duas?subcategoryId=${1}`);
+                const response = await fetch(subcategoryId ? `${url}/api/duas?subcategoryId=${subcategoryId}` : `${url}/api/duas?subcategoryId=${1}`);
                 const data = await response.json();
                 setSectionTitle(data[1]?.dua_name_en
                 )

@@ -4,6 +4,8 @@ import CategoryContentCard from './CategoryContentCard';
 import { useSearch } from './SearchContext';
 
 export default function CategoryContents() {
+  const url = process.env.NEXT_PUBLIC_API_URL
+
   const { searchTerm } = useSearch(); // Retrieve searchTerm from context
 
   const [data, setData] = useState([]);
@@ -15,7 +17,7 @@ export default function CategoryContents() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`process.env.NEXT_PUBLIC_API_URL/api/categories`);
+        const response = await fetch(`${url}/api/categories`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

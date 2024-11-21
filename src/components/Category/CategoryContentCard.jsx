@@ -1,26 +1,18 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { useDuaContext } from '../Surah/ContextProvider';
 import categoryIcons from './categoryIcons'; 
 
 export default function CategoryContentCard({ getData }) {
-  const url = process.env.NEXT_PUBLIC_API_URL
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { setSubcategoryId } = useDuaContext();
   const [subcategories, setSubcategories] = useState([]);
   const [expandedCategoryId, setExpandedCategoryId] = useState(null);
 
-  // Automatically expand the first category on initial render
-  useEffect(() => {
-    if (getData.length > 0) {
-      setExpandedCategoryId(getData[0].cat_id); // Set the first category as expanded initially
-      handleGetSubData(getData[0].cat_id); // Fetch subcategories for the first category
-    }
-  }, [getData,handleGetSubData]);
-
-  // Function to fetch subcategories based on category ID
-  const handleGetSubData = async (categoryId) => {
+  // Memoizing the handleGetSubData function with useCallback
+  const handleGetSubData = useCallback(async (categoryId) => {
     if (expandedCategoryId === categoryId) {
       // If clicked category is already expanded, collapse it
       setExpandedCategoryId(null);
@@ -35,7 +27,15 @@ export default function CategoryContentCard({ getData }) {
     } catch (error) {
       console.error('Error fetching subcategories:', error);
     }
-  };
+  }, [expandedCategoryId, url]);
+
+  // Automatically expand the first category on initial render
+  useEffect(() => {
+    if (getData.length > 0) {
+      setExpandedCategoryId(getData[0].cat_id); // Set the first category as expanded initially
+      handleGetSubData(getData[0].cat_id); // Fetch subcategories for the first category
+    }
+  }, [getData, handleGetSubData]); // Ensure handleGetSubData is included in the dependency array
 
   // Function to get the corresponding icon based on category id
   const getIconForCategory = (categoryId) => {
@@ -52,13 +52,13 @@ export default function CategoryContentCard({ getData }) {
               {/* Display the category icon */}
               <div className='flex gap-x-2'>
                 {getIconForCategory(category.cat_id) && (
-                 <Image 
-                 src={getIconForCategory(category.cat_id)} 
-                 width={40} // Only set width
-                 height={40} // Remove this to auto calculate height
-                 alt="category icon" 
-                 style={{ width: '40px', height: 'auto' }} // CSS ensures aspect ratio is maintained
-               />
+                  <Image 
+                    src={getIconForCategory(category.cat_id)} 
+                    width={40} // Only set width
+                    height={40} // Remove this to auto calculate height
+                    alt="category icon" 
+                    style={{ width: '40px', height: 'auto' }} // CSS ensures aspect ratio is maintained
+                  />
                 )}
                 <div>
                   <h2>{category.cat_name_en}</h2>

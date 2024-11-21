@@ -17,7 +17,7 @@ export default function SurahCard() {
         const fetchDuas = async () => {
             setLoading(true);
             try {
-                const response = await fetch(subcategoryId ? `https://duaruqyah-zeta.vercel.app/api/duas?subcategoryId=${subcategoryId}` : `http://https://duaruqyah-zeta.vercel.app/api/duas?subcategoryId=${1}`);
+                const response = await fetch(subcategoryId ? `process.env.NEXT_PUBLIC_API_UR/api/duas?subcategoryId=${subcategoryId}` : `process.env.NEXT_PUBLIC_API_UR/api/duas?subcategoryId=${1}`);
                 const data = await response.json();
                 setSectionTitle(data[1]?.dua_name_en
                 )

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import CategoryContentCard from './CategoryContentCard';
 import { useSearch } from './SearchContext';
-
+// 
 export default function CategoryContents() {
   const url = process.env.NEXT_PUBLIC_API_URL
 

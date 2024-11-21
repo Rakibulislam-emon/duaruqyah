@@ -6,7 +6,7 @@ import { useSearch } from './SearchContext';
 export default function CategoryContents() {
   const url = process.env.NEXT_PUBLIC_API_URL
 
-  const { searchTerm } = useSearch(); // Retrieve searchTerm from context
+  const { searchTerm } = useSearch(); 
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -3,15 +3,35 @@ import { open } from 'sqlite';
 
 // Open the SQLite database
 export const getDatabase = async () => {
-  return open({
-    filename: './src/db/dua_main.sqlite',
-    driver: sqlite3.Database,
-  });
+  try {
+    return await open({
+      filename: './src/db/dua_main.sqlite',
+      driver: sqlite3.Database,
+    });
+  } catch (error) {
+    console.error('Error connecting to the database:', error.message);
+    throw new Error('Failed to connect to the database');
+  }
 };
 
 // Fetch categories from the database
 export const getCategories = async () => {
-  const db = await getDatabase();
-  const rows = await db.all('SELECT * FROM category');
-  return rows;
+  let db;
+  try {
+    db = await getDatabase();
+    const rows = await db.all('SELECT * FROM category');
+    return rows;
+  } catch (error) {
+    console.error('Error fetching categories:', error.message);
+    throw new Error('Failed to fetch categories');
+  } finally {
+    // Ensure the database connection is closed after the operation
+    if (db) {
+      try {
+        await db.close();
+      } catch (closeError) {
+        console.error('Error closing the database connection:', closeError.message);
+      }
+    }
+  }
 };

@@ -6,72 +6,72 @@ import { useDuaContext } from "../Surah/ContextProvider";
 import categoryIcons from "./categoryIcons";
 
 export default function CategoryContentCard({ getData }) {
+  
   const url = process.env.NEXT_PUBLIC_API_URL;
   const { setSubcategoryId } = useDuaContext();
   const [subcategories, setSubcategories] = useState([]);
   const [expandedCategoryId, setExpandedCategoryId] = useState(null);
 
-  // Memoizing the handleGetSubData function with useCallback
-  const handleGetSubData = useCallback(
-    async (categoryId) => {
-      if (expandedCategoryId === categoryId) {
-        // If clicked category is already expanded, collapse it
-        setExpandedCategoryId(null);
-        return;
-      }
+  const handleGetSubData = async (categoryId) => {
+    if (expandedCategoryId === categoryId) {
+      setExpandedCategoryId(null); // Collapse if already expanded
+      return;
+    }
 
-      try {
-        const response = await fetch(
-          `${url}/api/subcategories?categoryId=${categoryId}`
-        );
-        const data = await response.json();
-        setSubcategories(data); // Store fetched subcategories in the state
-        setExpandedCategoryId(categoryId); // Set the clicked category as expanded
-      } catch (error) {
-        console.error("Error fetching subcategories:", error);
-      }
-    },
-    [expandedCategoryId, url]
-  );
+    try {
+      const response = await fetch(
+        `${url}/api/subcategories?categoryId=${categoryId}`
+      );
+      const data = await response.json();
+      setSubcategories(data || []); // Ensure fallback to empty array
+      setExpandedCategoryId(categoryId);
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+      setSubcategories([]); // Handle errors gracefully
+    }
+  };
 
   // Automatically expand the first category on initial render
   useEffect(() => {
     if (getData.length > 0) {
-      setExpandedCategoryId(getData[0].cat_id); // Set the first category as expanded initially
-      handleGetSubData(getData[0].cat_id); // Fetch subcategories for the first category
-    }
-  }, [getData, handleGetSubData]); // Ensure handleGetSubData is included in the dependency array
+      const firstCategoryId = getData[0].cat_id;
 
-  // Function to get the corresponding icon based on category id
+      // Only fetch if the expandedCategoryId is not already set
+      if (expandedCategoryId === null) {
+        handleGetSubData(firstCategoryId);
+      }
+    }
+    // Removed `handleGetSubData` from the dependency array
+    // Added `expandedCategoryId` to ensure one-time execution
+  }, [getData, expandedCategoryId]);
+
   const getIconForCategory = (categoryId) => {
-    const icon = categoryIcons.find((icon) => icon.id === categoryId); // Match by category id
-    return icon ? icon.icon : null; // Return the icon if found, otherwise null
+    const icon = categoryIcons.find((icon) => icon.id === categoryId);
+    return icon ? icon.icon : null;
   };
 
   return (
     <div className="overflow-y-auto lg:max-h-[70vh]">
       {getData.map((category) => (
-        <div key={category.id} className="p-4">
+        <div key={category.cat_id} className="p-4">
           <div
             className="flex justify-between cursor-pointer"
             onClick={() => handleGetSubData(category.cat_id)}
           >
             <div className="flex gap-x-3">
               {/* Display the category icon */}
-              <div className="flex gap-x-2">
-                {getIconForCategory(category.cat_id) && (
-                  <Image
-                    src={getIconForCategory(category.cat_id)}
-                    width={40} // Only set width
-                    height={40} // Remove this to auto calculate height
-                    alt="category icon"
-                    style={{ width: "40px", height: "auto" }} // CSS ensures aspect ratio is maintained
-                  />
-                )}
-                <div>
-                  <h2>{category.cat_name_en}</h2>
-                  <h2>Subcategory: {category.no_of_subcat}</h2>
-                </div>
+              {getIconForCategory(category.cat_id) && (
+                <Image
+                  src={getIconForCategory(category.cat_id)}
+                  width={40}
+                  height={40}
+                  alt="category icon"
+                  style={{ width: "40px", height: "auto" }}
+                />
+              )}
+              <div>
+                <h2>{category.cat_name_en}</h2>
+                <h2>Subcategory: {category.no_of_subcat}</h2>
               </div>
             </div>
             <div className="text-center border-l-2">
@@ -81,16 +81,16 @@ export default function CategoryContentCard({ getData }) {
             </div>
           </div>
 
-          {/* Show the subcategories directly below the clicked category */}
+          {/* Render subcategories if the category is expanded */}
           {expandedCategoryId === category.cat_id && (
             <div className="mt-4 p-4 bg-gray-50 rounded-lg shadow-md">
               <ul className="mt-2 list-decimal pl-4">
                 {subcategories.length > 0 ? (
                   subcategories.map((subcat) => (
                     <li
-                      onClick={() => setSubcategoryId(subcat.subcat_id)} // Set the clicked subcategory
                       key={subcat.subcat_id}
-                      className="p-2 border-b"
+                      onClick={() => setSubcategoryId(subcat.subcat_id)}
+                      className="p-2 border-b cursor-pointer hover:bg-gray-100"
                     >
                       <button>{subcat.subcat_name_en}</button>
                     </li>

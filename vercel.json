@@ -1,8 +1,7 @@
 {
-    "functions": {
-      "pages/api/**/*.js": {
-        "includeFiles": "src/db/dua_main.sqlite"
-      }
+  "functions": {
+    "pages/api/**/*.js": {
+      "includeFiles": "/duaruqyah/src/db/dua_main.sqlite"
     }
   }
-  
+}

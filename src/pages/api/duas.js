@@ -1,10 +1,6 @@
-import { getDatabase } from "@/db/lib/db";
-
-
-
 export default async function handler(req, res) {
   // Add CORS headers
-  res.setHeader('Access-Control-Allow-Origin', 'https://duaruqyah-zeta.vercel.app'); // Allow only your frontend domain
+  res.setHeader('Access-Control-Allow-Origin', 'https://duaruqyah-jiw0edfx0-nahiyans-projects.vercel.app'); // Allow only your frontend domain
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allow specific HTTP methods
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
 

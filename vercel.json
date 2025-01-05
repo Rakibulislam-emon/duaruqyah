@@ -1,0 +1,8 @@
+{
+    "functions": {
+      "api/*.js": {
+        "includeFiles": "src/db/dua_main.sqlite"
+      }
+    }
+  }
+  

@@ -22,7 +22,9 @@ export default function CategoryContentCard({ getData }) {
       const response = await fetch(
         `${url}/api/subcategories?categoryId=${categoryId}`
       );
+      console.log(response);
       const data = await response.json();
+      console.log('data:', data)
       setSubcategories(data || []); // Ensure fallback to empty array
       setExpandedCategoryId(categoryId);
     } catch (error) {
@@ -43,7 +45,7 @@ export default function CategoryContentCard({ getData }) {
     }
     // Removed `handleGetSubData` from the dependency array
     // Added `expandedCategoryId` to ensure one-time execution
-  }, [getData, expandedCategoryId]);
+  }, []);
 
   const getIconForCategory = (categoryId) => {
     const icon = categoryIcons.find((icon) => icon.id === categoryId);

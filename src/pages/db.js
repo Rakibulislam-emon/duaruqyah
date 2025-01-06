@@ -24,14 +24,15 @@ export const getCategories = async () => {
   } catch (error) {
     console.error('Error fetching categories:', error.message);
     throw new Error('Failed to fetch categories');
-  } finally {
-    // Ensure the database connection is closed after the operation
-    if (db) {
-      try {
-        await db.close();
-      } catch (closeError) {
-        console.error('Error closing the database connection:', closeError.message);
-      }
-    }
-  }
+  } 
+  // finally {
+  //   // Ensure the database connection is closed after the operation
+  //   if (db) {
+  //     try {
+  //       await db.close();
+  //     } catch (closeError) {
+  //       console.error('Error closing the database connection:', closeError.message);
+  //     }
+  //   }
+  // }
 };

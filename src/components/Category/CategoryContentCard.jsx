@@ -6,7 +6,6 @@ import { useDuaContext } from "../Surah/ContextProvider";
 import categoryIcons from "./categoryIcons";
 
 export default function CategoryContentCard({ getData }) {
-  
   const url = process.env.NEXT_PUBLIC_API_URL;
   const { setSubcategoryId } = useDuaContext();
   const [subcategories, setSubcategories] = useState([]);
@@ -24,7 +23,7 @@ export default function CategoryContentCard({ getData }) {
       );
       console.log(response);
       const data = await response.json();
-      console.log('data:', data)
+      console.log("data:", data);
       setSubcategories(data || []); // Ensure fallback to empty array
       setExpandedCategoryId(categoryId);
     } catch (error) {

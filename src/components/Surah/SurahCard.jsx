@@ -26,7 +26,7 @@ export default function SurahCard() {
         setSectionTitle(data[1]?.dua_name_en);
         setDuas(data);
       } catch (error) {
-        console.error("Error fetching duas:", error);
+        console.error("Error fetching duas:", error.message);
       } finally {
         setLoading(false);
       }

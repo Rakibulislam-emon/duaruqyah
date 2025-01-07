@@ -1,5 +1,7 @@
 // import { getDatabase } from "@/db/lib/db";
 
+import { getDatabase } from "../db";
+
 // export default async function handler(req, res) {
 //   const db = await getDatabase();
 
@@ -25,7 +27,6 @@
 //     res.status(500).json({ message: 'Internal Server Error' });
 //   }
 // }
-import { getDatabase } from "@/pages/db";
 
 export default async function handler(req, res) {
   const db = await getDatabase();

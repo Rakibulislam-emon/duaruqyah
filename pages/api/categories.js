@@ -1,4 +1,4 @@
-import { getCategories } from "@/pages/db";
+import { getCategories } from "../db";
 
 export default async function handler(req, res) {
   try {
